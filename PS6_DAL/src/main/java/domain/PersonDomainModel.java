@@ -1,7 +1,12 @@
 package domain;
 
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.Properties;
+import java.util.UUID;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -16,6 +21,7 @@ import util.LocalDateAdapter;
 
 public class PersonDomainModel {
 
+	private UUID PersonID;
     private  StringProperty firstName;
     private  StringProperty lastName;
     private  StringProperty street;
@@ -23,10 +29,17 @@ public class PersonDomainModel {
     private  StringProperty city;
     private  ObjectProperty<LocalDate> birthday;
 
-    /**
-     * Default constructor.
-     */
-
+    public void setPersonID(UUID personID) {
+    	PersonID = personID;
+    }
+    
+    public UUID getPersonID() {
+    	return this.PersonID;
+    }
+    
+    public PersonDomainModel() {
+    	this.PersonID = UUID.randomUUID();
+    }
 
     public String getFirstName() {
         return firstName.get();

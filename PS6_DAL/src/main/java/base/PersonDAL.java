@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import domain.PersonDomainModel;
+import domain.StudentDomainModel;
 import util.HibernateUtil;
 
 public class PersonDAL {
@@ -44,8 +45,9 @@ public class PersonDAL {
 			
 			List persons = session.createQuery("FROM PersonDomainModel").list();
 			for (Iterator iterator = persons.iterator(); iterator.hasNext();) {
-				PersonDomainModel per = (PersonDomainModel) iterator.next();
-				pers.add(per);
+				PersonDomainModel stu = (PersonDomainModel) iterator.next();
+				pers.add(stu);
+
 			}
 			
 			tx.commit();
@@ -57,7 +59,6 @@ public class PersonDAL {
 			session.close();
 		}
 		return pers;
-
 	}
 
 	public static PersonDomainModel getPerson(UUID perID) {
@@ -72,11 +73,7 @@ public class PersonDAL {
 			query.setParameter("id", perID.toString());
 			
 			List<?> list = query.list();
-			if (list.size() > 0)
-			{
-				perGet = (PersonDomainModel)list.get(0);
-			}
-			
+			perGet = (PersonDomainModel)list.get(0);
 			
 			tx.commit();
 		} catch (HibernateException e) {
@@ -86,7 +83,7 @@ public class PersonDAL {
 		} finally {
 			session.close();
 		}
-		return perGet;	
+		return perGet;
 	}
 
 	public static void deletePerson(UUID perID) {
@@ -100,7 +97,6 @@ public class PersonDAL {
 			PersonDomainModel per = (PersonDomainModel) session.get(PersonDomainModel.class, perID);
 			session.delete(per);
 		
-			
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx != null)
@@ -109,12 +105,13 @@ public class PersonDAL {
 		} finally {
 			session.close();
 		}
+
 	}
 
 	public static PersonDomainModel updatePerson(PersonDomainModel per) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = null;
-		PersonDomainModel perGet = null;		
+		StudentDomainModel perGet = null;		
 		
 		try {
 			tx = session.beginTransaction();	
